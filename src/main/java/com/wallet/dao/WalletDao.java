@@ -1,15 +1,44 @@
 package com.wallet.dao;
 
-import com.wallet.util.DBConnection.DBConnection;
 import com.wallet.model.Wallet;
 import java.math.BigDecimal;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class WalletDao {
+    public Wallet findByUserId(Connection conn, long userId) throws Exception{
+        String query = "SELECT user_id, balance FROM wallets WHERE user_id = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setLong(1,userId);
+        ResultSet rs = ps.executeQuery();
 
+        if(rs.next()){
+            return new Wallet(rs.getLong("user_id"),rs.getBigDecimal("balance"));
+        }
+        return null;
+    }
+
+
+    public Wallet findByUserIdForUpdate(Connection conn, long userId) throws Exception{
+        String query = "SELECT user_id, balance FROM wallets WHERE user_id = ? FOR UPDATE";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setLong(1,userId);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()){
+            return new Wallet(rs.getLong("user_id"),rs.getBigDecimal("balance"));
+        }
+        return null;
+    }
+
+    public void updateBalance(Connection conn, long userId, BigDecimal amount) throws SQLException {
+        String query = "UPDATE wallets SET balance = ? WHERE user_id = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setBigDecimal(1,amount);
+        ps.setLong(2,userId);
+        ps.executeUpdate();
+    }
 }
