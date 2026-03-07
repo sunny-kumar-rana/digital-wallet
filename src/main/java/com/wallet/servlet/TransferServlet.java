@@ -25,8 +25,9 @@ public class TransferServlet extends HttpServlet {
 
             response.getWriter().println("Transfer Successful!");
         } catch (Exception e) {
-            response.setStatus(400);
-            response.getWriter().println("Transfer Failed! "+e.getMessage());
+            response.setContentType("text/plain");
+
+            e.printStackTrace(response.getWriter());
         }
     }
 }

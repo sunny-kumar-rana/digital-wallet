@@ -10,7 +10,7 @@ public class DBConnection {
     private static final String PASSWORD = "Admin";
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("oracle.jdbc.driver.DriverManager");
+        Class.forName("oracle.jdbc.OracleDriver");
         return DriverManager.getConnection(URL,USER,PASSWORD);
     }
 }
