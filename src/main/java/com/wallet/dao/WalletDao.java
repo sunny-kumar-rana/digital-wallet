@@ -41,4 +41,13 @@ public class WalletDao {
         ps.setLong(2,userId);
         ps.executeUpdate();
     }
+
+    public void createWallet(Connection conn, long userId) throws SQLException{
+        String query = "INSERT INTO wallets (user_id, balance, updated_at) VALUES (?, 0, CURRENT_TIMESTAMP)";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setLong(1,userId);
+
+        ps.executeUpdate();
+    }
 }
