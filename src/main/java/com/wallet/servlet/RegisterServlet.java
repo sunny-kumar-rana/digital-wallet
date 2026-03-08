@@ -1,0 +1,39 @@
+package com.wallet.servlet;
+
+import com.wallet.model.User;
+import com.wallet.service.UserService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+
+@WebServlet("/Register")
+public class RegisterServlet extends HttpServlet {
+    private UserService userService = new UserService();
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try{
+            User user = new User();
+
+            user.setName(request.getParameter("name"));
+            user.setEmail(request.getParameter("email"));
+            user.setPassword(request.getParameter("password"));
+
+            userService.register(user);
+
+            PrintWriter pw = response.getWriter();
+            pw.println("User Registered Successfully");
+
+        } catch (SQLException e) {
+            e.printStackTrace(response.getWriter());
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);;
+        }
+    }
+}
