@@ -40,4 +40,23 @@ public class WalletService {
             conn.close();
         }
     }
+
+    public BigDecimal getBalance(long userId) throws SQLException, ClassNotFoundException {
+        Connection conn = DBConnection.getConnection();
+
+        try{
+            Wallet wallet = walletDao.findByUserId(conn, userId);
+
+            if (wallet == null){
+                throw new RuntimeException("Wallet not Found");
+            }
+
+            return wallet.getBalance();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            conn.close();
+        }
+    }
 }
