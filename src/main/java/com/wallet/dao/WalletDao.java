@@ -50,4 +50,15 @@ public class WalletDao {
 
         ps.executeUpdate();
     }
+    public BigDecimal getBalance(Connection conn, long userId) throws SQLException {
+        String query = "SELECT balance FROM wallets WHERE user_id = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setLong(1,userId);
+
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            return rs.getBigDecimal("balance");
+        }
+        return null;
+    }
 }

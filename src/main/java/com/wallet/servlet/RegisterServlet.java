@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-@WebServlet("/Register")
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
     private UserService userService = new UserService();
 
