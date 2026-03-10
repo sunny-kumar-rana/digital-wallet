@@ -9,6 +9,7 @@ import com.wallet.util.DBConnection.DBConnection;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class WalletService {
     private WalletDao walletDao = new WalletDao();
@@ -58,5 +59,18 @@ public class WalletService {
         } finally {
             conn.close();
         }
+    }
+
+    public List<Transaction> getTransactionHistory(long userId) throws ClassNotFoundException, SQLException {
+        Connection conn = DBConnection.getConnection();
+
+        try{
+            return transactionDao.findByUser(conn, userId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            conn.close();
+        }
+
     }
 }
