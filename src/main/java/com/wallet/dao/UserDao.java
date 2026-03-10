@@ -23,4 +23,24 @@ public class UserDao {
 
         return rs.getLong(1);
     }
+    public User findUserByEmail(Connection conn, String email) throws SQLException {
+        String query = "SELECT id, name, email, password FROM users WHERE email = ?";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1,email);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()){
+            User user = new User();
+
+            user.setId(rs.getLong("id"));
+            user.setName(rs.getString("name"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+
+            return user;
+        }
+
+        return null;
+    }
 }

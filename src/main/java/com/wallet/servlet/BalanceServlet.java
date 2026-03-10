@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +20,11 @@ public class BalanceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
 
         try{
-            long userId = Long.parseLong(request.getParameter("userId"));
+            HttpSession session = request.getSession(false);
+            if(session == null){
+                throw new RuntimeException("Not Logged In");
+            }
+            long userId = (Long)request.getSession().getAttribute("userId");
             BigDecimal balance = walletService.getBalance(userId);
 
             PrintWriter pw = response.getWriter();

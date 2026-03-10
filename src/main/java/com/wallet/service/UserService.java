@@ -28,4 +28,23 @@ public class UserService {
             conn.close();
         }
     }
+
+    public User login(String email, String password) throws SQLException, ClassNotFoundException {
+        Connection conn = DBConnection.getConnection();
+
+        try{
+            User user = userDao.findUserByEmail(conn, email);
+
+            if(user == null){
+                throw new RuntimeException("User not Found");
+            }
+            if(!user.getPassword().equals(password)){
+                throw new RuntimeException("Invalid Password");
+            }
+
+            return user;
+        } finally {
+            conn.close();
+        }
+    }
 }
