@@ -2,18 +2,18 @@
 
 <div class="container">
 
-<h2>Create Account</h2>
+<h2>Wallet Login</h2>
 
-<form action="register" method="post">
-
-<input type="text" name="name" placeholder="Full Name">
+<form action="login" method="post">
 
 <input type="text" name="email" placeholder="Email">
 
 <input type="password" name="password" placeholder="Password">
 
-<button type="submit">Register</button>
+<button type="submit">Login</button>
 
 </form>
+
+<a href="register.jsp">Create Account</a>
 
 </div>
